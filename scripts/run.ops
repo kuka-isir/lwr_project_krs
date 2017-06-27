@@ -1,0 +1,11 @@
+// Import base script
+import("rtt_rospack")
+runScript(ros.find("lwr_utils")+"/scripts/utils.ops")
+
+// Load robot
+loadRobot(getRobotName(),isSim(),true)
+loadStatePublisher(true)
+
+// Set initial robot configuration
+if (isSim()) then
+  setRobotInitialJointConfiguration(1.0,0.,0.0,-1.57,0.0,1.57,0.)
