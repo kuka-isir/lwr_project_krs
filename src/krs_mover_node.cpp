@@ -4,10 +4,11 @@ int main(int argc, char** argv) {
   ros::init(argc, argv, "krs_mover_node");
   ros::NodeHandle nh;
   
-  double speed_percent = 10;
-  
   KrsMover krs_mover;
-  krs_mover.moveToStart(100);
+  
+  double speed_percent = 100;
+  
+  krs_mover.moveToStart(speed_percent);
   
   geometry_msgs::Pose rel_pose;
   rel_pose.orientation.w = 1;
@@ -16,8 +17,8 @@ int main(int argc, char** argv) {
   rel_pose.orientation.z = 0;
   rel_pose.position.x = 0;
   rel_pose.position.y = 0;
-  rel_pose.position.z = -0.1;
-  krs_mover.moveLinRel(rel_pose,100);
+  rel_pose.position.z = -0.2;
+  krs_mover.moveLinRel(rel_pose,speed_percent);
   
   
   geometry_msgs::Pose rel_ori;
@@ -28,13 +29,13 @@ int main(int argc, char** argv) {
   rel_ori.position.x = 0;
   rel_ori.position.y = 0;
   rel_ori.position.z = 0;
-  krs_mover.moveLinRel(rel_ori,100);
+  krs_mover.moveLinRel(rel_ori,speed_percent);
   
-  krs_mover.moveLinRelInTool(rel_pose,100);
+  krs_mover.moveLinRelInTool(rel_pose,speed_percent);
   
-  krs_mover.moveAPlat(100);
+  krs_mover.moveAPlat(speed_percent);
   
-  krs_mover.moveToHeight(0.4,100,false,0);
+  krs_mover.moveToHeight(0.4,speed_percent,false,0);
 
   ros::shutdown();
   return 0;

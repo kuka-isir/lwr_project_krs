@@ -16,7 +16,11 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   tf
   tf_conversions
+  rtt_ros
 )
+
+find_package(rtt_ros_kdl_tools REQUIRED)
+include_directories(${rtt_ros_kdl_tools_INCLUDE_DIRS})
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -127,7 +131,7 @@ include_directories(
 
 ## Declare a C++ library
 add_library(krs_mover src/krs_mover.cpp)
-target_link_libraries(krs_mover ${catkin_LIBRARIES})
+target_link_libraries(krs_mover ${catkin_LIBRARIES} ${rtt_ros_kdl_tools_LIBRARIES})
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
