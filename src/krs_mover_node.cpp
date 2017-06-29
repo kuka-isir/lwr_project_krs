@@ -6,7 +6,8 @@ int main(int argc, char** argv) {
   
   KrsMover krs_mover;
   
-  double speed_percent = 100;
+  double speed_percent = 50;
+  double max_force = 0.5;
   
   krs_mover.moveToStart(speed_percent);
   
@@ -17,9 +18,8 @@ int main(int argc, char** argv) {
   rel_pose.orientation.z = 0;
   rel_pose.position.x = 0;
   rel_pose.position.y = 0;
-  rel_pose.position.z = -0.2;
-  krs_mover.moveLinRel(rel_pose,speed_percent);
-  
+  rel_pose.position.z = -0.3;
+  krs_mover.moveLinRel(rel_pose,speed_percent,true,max_force);
   
   geometry_msgs::Pose rel_ori;
   rel_ori.orientation.w = 0.854;
@@ -35,7 +35,7 @@ int main(int argc, char** argv) {
   
   krs_mover.moveAPlat(speed_percent);
   
-  krs_mover.moveToHeight(0.4,speed_percent,false,0);
+  krs_mover.moveToHeight(0.4,speed_percent,true, max_force);
 
   ros::shutdown();
   return 0;

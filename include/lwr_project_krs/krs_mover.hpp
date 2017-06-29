@@ -17,12 +17,12 @@ class KrsMover
     KrsMover();
      
     bool moveToJointPosition(const std::vector<double> joint_vals,double velocity_percent);
-    bool moveToCartesianPose(const geometry_msgs::Pose pose, double velocity_percent);
+    bool moveToCartesianPose(const geometry_msgs::Pose pose, double velocity_percent,bool stop_on_force = false,double max_force = 0.5);
     bool moveToCartesianPoseUsingPTP(const geometry_msgs::Pose pose,bool use_relative,double velocity_percent);
-    bool moveLinRel(const geometry_msgs::Pose pose,double velocity_percent);
-    bool moveLinRelInTool(const geometry_msgs::Pose pose,double velocity_percent);
+    bool moveLinRel(const geometry_msgs::Pose pose,double velocity_percent,bool stop_on_force = false ,double max_force = 0.5 );
+    bool moveLinRelInTool(const geometry_msgs::Pose pose,double velocity_percent,bool stop_on_force = false ,double max_force = 0.5);
     bool moveAPlat(double velocity_percent);
-    bool moveToHeight(double height,double velocity_percent,bool stop_on_force ,double max_force );
+    bool moveToHeight(double height,double velocity_percent,bool stop_on_force = false ,double max_force = 0.5);
     bool moveToStart(double velocity_percent);
     
     void state_callback(const sensor_msgs::JointState::ConstPtr& msg);

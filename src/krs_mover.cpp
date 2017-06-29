@@ -60,7 +60,7 @@ bool KrsMover::moveToJointPosition(const std::vector<double> joint_vals,double v
   return true;
 }
 
-bool KrsMover::moveToCartesianPose(const geometry_msgs::Pose pose, double velocity_percent){
+bool KrsMover::moveToCartesianPose(const geometry_msgs::Pose pose, double velocity_percent,bool stop_on_force ,double max_force ){
   krl_msgs::LINGoal lin_goal;
   lin_goal.RPY_mask.x = 1;
   lin_goal.RPY_mask.y = 1;
@@ -71,7 +71,8 @@ bool KrsMover::moveToCartesianPose(const geometry_msgs::Pose pose, double veloci
   lin_goal.vel_percent = velocity_percent;
   lin_goal.use_relative = false;
   lin_goal.in_tool_frame = false;
-  lin_goal.stop_on_force = false;
+  lin_goal.stop_on_force = stop_on_force;
+  lin_goal.max_allowed_force = max_force;
   geometry_msgs::Vector3 xyz, rpy;
   xyz.x = pose.position.x;
   xyz.y = pose.position.y;
@@ -118,7 +119,7 @@ bool KrsMover::moveToCartesianPoseUsingPTP(const geometry_msgs::Pose pose,bool u
   return true;
 }
 
-bool KrsMover::moveLinRel(const geometry_msgs::Pose pose,double velocity_percent){
+bool KrsMover::moveLinRel(const geometry_msgs::Pose pose,double velocity_percent,bool stop_on_force ,double max_force ){
   krl_msgs::LINGoal lin_goal;
   lin_goal.RPY_mask.x = 1;
   lin_goal.RPY_mask.y = 1;
@@ -129,8 +130,8 @@ bool KrsMover::moveLinRel(const geometry_msgs::Pose pose,double velocity_percent
   lin_goal.vel_percent = velocity_percent;
   lin_goal.use_relative = true;
   lin_goal.in_tool_frame = false;
-  lin_goal.stop_on_force = false;
-  lin_goal.max_allowed_force = 1.0;
+  lin_goal.stop_on_force = stop_on_force;
+  lin_goal.max_allowed_force = max_force;
   geometry_msgs::Vector3 xyz, rpy;
   xyz.x = pose.position.x;
   xyz.y = pose.position.y;
@@ -147,7 +148,7 @@ bool KrsMover::moveLinRel(const geometry_msgs::Pose pose,double velocity_percent
   return true;
 }
 
-bool KrsMover::moveLinRelInTool(const geometry_msgs::Pose pose,double velocity_percent){
+bool KrsMover::moveLinRelInTool(const geometry_msgs::Pose pose,double velocity_percent,bool stop_on_force ,double max_force ){
   krl_msgs::LINGoal lin_goal;
   lin_goal.RPY_mask.x = 1;
   lin_goal.RPY_mask.y = 1;
@@ -158,8 +159,8 @@ bool KrsMover::moveLinRelInTool(const geometry_msgs::Pose pose,double velocity_p
   lin_goal.vel_percent = velocity_percent;
   lin_goal.use_relative = true;
   lin_goal.in_tool_frame = true;
-  lin_goal.stop_on_force = false;
-  lin_goal.max_allowed_force = 1.0;
+  lin_goal.stop_on_force = stop_on_force;
+  lin_goal.max_allowed_force = max_force;
   geometry_msgs::Vector3 xyz, rpy;
   xyz.x = pose.position.x;
   xyz.y = pose.position.y;
