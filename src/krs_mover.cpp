@@ -60,6 +60,31 @@ bool KrsMover::moveToJointPosition(const std::vector<double> joint_vals,double v
   return true;
 }
 
+bool KrsMover::moveToJointPositionRel(const std::vector<double> joint_vals,double velocity_percent){
+  std::vector<unsigned char> mask(joint_vals.size(), 1);
+  krl_msgs::PTPGoal ptp_goal;
+  ptp_goal.RPY_mask.x = 1;
+  ptp_goal.RPY_mask.y = 1;
+  ptp_goal.RPY_mask.z = 1;
+  ptp_goal.XYZ_mask.x = 1;
+  ptp_goal.XYZ_mask.y = 1;
+  ptp_goal.XYZ_mask.z = 1;
+  ptp_goal.vel_percent = velocity_percent;
+
+  std::vector<float> goal_vals;
+  for(int i = 0; i<joint_vals.size();i++ )
+    goal_vals.push_back(joint_vals[i]);
+
+  ptp_goal.ptp_goal = goal_vals;
+  ptp_goal.ptp_input_type = krl_msgs::PTPGoal::Joint;
+  ptp_goal.ptp_mask = mask;
+  ptp_goal.use_radians = true;
+  ptp_goal.use_relative = true;
+
+  ptp_ac_.sendGoalAndWait(ptp_goal);
+  return true;
+}
+
 bool KrsMover::moveToCartesianPose(const geometry_msgs::Pose pose, double velocity_percent,bool stop_on_force ,double max_force ){
   krl_msgs::LINGoal lin_goal;
   lin_goal.RPY_mask.x = 1;

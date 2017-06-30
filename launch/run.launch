@@ -21,7 +21,7 @@
   <!-- The end effector frame (you'll be able to use frames <= tip_link for cartesian position, jacobians etc.) -->
   <arg name="tip_link" default="ati_link"/>
   <!-- The root_link will be frame used for sending goals to the cartesian controller -->
-  <arg name="root_link" default="base_link"/>
+  <arg name="root_link" default="link_0"/>
   <!-- Run Simulated robot (need to 'roslaunch rtt_lwr_gazebo lwr_gazebo.launch' first) -->
   <arg name="sim" default="false" />
   <!-- The global namespace if you need to change it (unlikely) -->

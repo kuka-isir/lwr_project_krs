@@ -19,6 +19,9 @@ find_package(catkin REQUIRED COMPONENTS
   rtt_ros
 )
 
+find_package(RapidJSON REQUIRED)
+include_directories(${RapidJSON_INCLUDE_DIRS})
+
 find_package(rtt_ros_kdl_tools REQUIRED)
 include_directories(${rtt_ros_kdl_tools_INCLUDE_DIRS})
 
@@ -29,7 +32,7 @@ include_directories(${rtt_ros_kdl_tools_INCLUDE_DIRS})
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
 ## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
-# catkin_python_setup()
+catkin_python_setup()
 
 ################################################
 ## Declare ROS messages, services and actions ##
@@ -143,6 +146,7 @@ target_link_libraries(krs_mover ${catkin_LIBRARIES} ${rtt_ros_kdl_tools_LIBRARIE
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(krs_mover_node src/krs_mover_node.cpp)
 add_executable(krs_server src/krs_server.cpp)
+add_executable(krs_client src/krs_client.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -157,6 +161,7 @@ add_executable(krs_server src/krs_server.cpp)
 ## Specify libraries to link a library or executable target against
 target_link_libraries(krs_mover_node ${catkin_LIBRARIES} krs_mover)
 target_link_libraries(krs_server ${catkin_LIBRARIES} krs_mover)
+target_link_libraries(krs_client ${catkin_LIBRARIES})
 
 #############
 ## Install ##
