@@ -88,6 +88,7 @@ int main(int argc , char *argv[]){
     
     // Send the response to the client
     std::cout << "Sending answer : \n" <<answer << std::endl;
+    answer += "\r\n"; 
     write(client_sock , answer.c_str() , strlen(answer.c_str()));
   }
     
