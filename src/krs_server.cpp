@@ -110,6 +110,7 @@ bool process_request(std::string query, std::string& answer){
         
   KDL::JntArray jnts = krs_mover->getCurrentJointPos();
   KDL::Frame pose = krs_mover->getCurrentCartPos();
+  geometry_msgs::Wrench wrench = krs_mover->getCurrentFtWrench();
   double roll,pitch,yaw;
   pose.M.GetRPY(roll, pitch, yaw);
   
@@ -286,6 +287,15 @@ bool process_request(std::string query, std::string& answer){
       writer.Double(roll);
       writer.Double(pitch);
       writer.Double(yaw);
+      writer.EndArray();
+      writer.Key("ft_sensor");
+      writer.StartArray();
+      writer.Double(wrench.force.x);
+      writer.Double(wrench.force.y);
+      writer.Double(wrench.force.z);
+      writer.Double(wrench.torque.x);
+      writer.Double(wrench.torque.y);
+      writer.Double(wrench.torque.z);
       writer.EndArray();
       break;
     

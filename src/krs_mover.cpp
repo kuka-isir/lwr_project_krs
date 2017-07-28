@@ -20,6 +20,9 @@ KrsMover::KrsMover() :
   // Subscribe to joint_state to get the current state of the robot
   state_sub_ = nh_.subscribe("/joint_states", 1, &KrsMover::state_callback, this);
   
+  // Subscribe to joint_state to get the current state of the robot
+  ft_sub_ = nh_.subscribe("/ft_sensor/wrench", 1, &KrsMover::ft_callback, this);
+  
   // Wait to give time to update the current model
   sleep(1);
 }
@@ -33,6 +36,11 @@ void KrsMover::state_callback(const sensor_msgs::JointState::ConstPtr& msg){
   curr_jnt_vel_ = arm_.getJointVelocities();
   curr_cart_pos_ = arm_.getSegmentPosition(ee_frame_);
   curr_cart_vel_ = arm_.getSegmentVelocity(ee_frame_);
+}
+
+void KrsMover::ft_callback(const geometry_msgs::WrenchStamped::ConstPtr& msg){
+  // Update the force 
+  curr_wrench_ = msg->wrench;
 }
 
 bool KrsMover::moveToJointPosition(const std::vector<double> joint_vals,double velocity_percent){

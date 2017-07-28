@@ -7,6 +7,7 @@
 #include <krl_msgs/PTPAction.h>
 #include <krl_msgs/LINAction.h>
 #include <geometry_msgs/PoseStamped.h>
+#include <geometry_msgs/WrenchStamped.h>
 #include <tf_conversions/tf_eigen.h>
 
 #include <rtt_ros_kdl_tools/chain_utils.hpp>
@@ -27,6 +28,7 @@ class KrsMover
     bool moveToStart(double velocity_percent);
     
     void state_callback(const sensor_msgs::JointState::ConstPtr& msg);
+    void ft_callback(const geometry_msgs::WrenchStamped::ConstPtr& msg);
     
     KDL::Frame getCurrentCartPos(){
       return curr_cart_pos_;
@@ -42,6 +44,9 @@ class KrsMover
     {
       return curr_jnt_vel_;
     }
+    geometry_msgs::Wrench getCurrentFtWrench(){
+      return curr_wrench_;
+    }
 
      
   private:
@@ -51,8 +56,9 @@ class KrsMover
     rtt_ros_kdl_tools::ChainUtils arm_;    
     ros::NodeHandle nh_;
     ros::AsyncSpinner spinner_;
-    ros::Subscriber state_sub_;
+    ros::Subscriber state_sub_, ft_sub_;
     
+    geometry_msgs::Wrench curr_wrench_;
     KDL::JntArray curr_jnt_pos_;
     KDL::JntArray curr_jnt_vel_;
     KDL::Frame curr_cart_pos_;
