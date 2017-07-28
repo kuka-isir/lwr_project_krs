@@ -7,7 +7,7 @@ import rospy
 from jsonsocket import Client
 
 host = '127.0.0.1'
-port = 8000
+port = 3333
 
 def main():
   rospy.init_node('client_json')
